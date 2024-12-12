@@ -1,0 +1,50 @@
+package com.kh.ssuper.common;
+
+import java.io.IOException;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+
+public class Template {
+	
+	/*
+	 * 기존 JDBC
+	 * 
+	 * purblic static connection getGonnection(){
+	 *  driver.properties 여기서 읽어서
+	 *  
+	 *  해당 DB와 접속된 정보를 가지고 있는 Connection객체를 반환
+	 *  
+	 *  }
+	 *  
+	 * public static void close(JDBC용객체){
+	 *   전달받은 JDBC용객체를 예외처리 후 반납
+	 * }
+	 * 
+	 * public static void commit/rollback(Connection){
+	 * }
+	 * 
+	 */
+	
+	// 이젠 MyBatis형식으로 진행할것 
+	public static SqlSession getSqlSession() {
+		
+		SqlSession sqlSession = null;
+		
+		// mybatis-config.xml 파일을 읽어서
+		// 해당 DB와 접속된 sqlSession 객체를 생성해서 반환
+		
+		String resource = "/mybatis-config.xml";
+		
+		//		/는 모든 src폴더의 최상위 폴더를 의미(classes)
+		
+		try {
+			Resources.getResourceAsStream(resource);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return sqlSession;
+	}
+	
+}

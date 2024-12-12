@@ -1,0 +1,25 @@
+package com.kh.ssuper.board.model.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import com.kh.ssuper.board.model.vo.Board;
+import com.kh.ssuper.common.PageInfo;
+
+public class BoardDao {
+
+	public int selectListCount(SqlSession sqlSession) {
+
+		return sqlSession.selectOne("boardMapper.selectListCount");
+		
+	}
+
+	public List<Board> selectList(SqlSession sqlSession, PageInfo pi) {		
+		
+		// 마이파티스에서는 페이징 처리를 위해 RowBounds라는 클래스를 제공함
+		
+		return sqlSession.select;
+	}
+
+}

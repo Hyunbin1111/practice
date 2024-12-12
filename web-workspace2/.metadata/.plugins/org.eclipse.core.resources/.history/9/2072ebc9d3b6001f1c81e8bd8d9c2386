@@ -1,0 +1,25 @@
+package com.kh.ssuper.board.model.service;
+
+import java.util.List;
+
+import com.kh.ssuper.board.model.vo.Board;
+import com.kh.ssuper.common.PageInfo;
+
+public interface BoardService {
+
+	// 게시글 관련 기능
+	
+	// 1. 목록 조회(페이징처리)
+	
+	int selectListCount();
+	
+	List<Board> selectList(PageInfo pi);
+	
+	// 2. 상세조회
+	
+	
+	
+	// 3. 검색서비스
+	
+	
+}

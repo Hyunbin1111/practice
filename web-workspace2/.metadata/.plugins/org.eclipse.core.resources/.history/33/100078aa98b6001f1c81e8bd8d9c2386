@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 
+	이 문서의 형식이 configuration(== 환경설정)임을 알려줌
+	=> configuration요소가 전체를 감싸고있음
+	
+	DTD : 유효성 검사를 해줌
+ -->
+ 
+ <configuration>
+ 
+ 	<!-- settings : MyBatis 구동 시 선언할 설정들을 작성하는 영역 -->
+ 	<settings>
+ 		<setting name="jdbcTypeForNull" />
+ 	</settings>
+ 	
+ 
+ </configuration>

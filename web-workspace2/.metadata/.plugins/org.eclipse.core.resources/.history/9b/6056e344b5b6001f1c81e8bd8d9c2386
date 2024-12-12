@@ -1,0 +1,26 @@
+package com.kh.ssuper.member.model.dao;
+
+import org.apache.ibatis.session.SqlSession;
+
+import com.kh.ssuper.member.model.vo.Member;
+
+public class MemberDao {
+
+	public void insertMember(SqlSession sqlSession, Member member) {
+		/*
+		 * 원래라면 변수지정 -> try-catch문 안에 pstmt를 사용해 sql문 실행, 결과 받기
+		 * -> finally에서 자원반납 -> return 순서
+		 */
+		/*
+		 *	sqlSession.insert("SQL문", "SQL문을 실행할 때 필요한 데이터")
+		 *	
+		 * sqlSession.sql문종류에 맞는 메소드("매퍼파일의namespace속성값") 
+		 */
+		
+		sqlSession.insert("memberMapper.insertMember", member);
+		
+		// 위치홀더에 값 담는걸 해야함, 이제 DAO에서 진행하지않고 mapper에서 진행한다.
+		
+	}
+
+}

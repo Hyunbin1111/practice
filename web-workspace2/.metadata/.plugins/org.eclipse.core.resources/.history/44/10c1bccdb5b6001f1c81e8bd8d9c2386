@@ -1,0 +1,34 @@
+package com.kh.ssuper.member.model.service;
+
+import com.kh.ssuper.member.model.dao.MemberDao;
+import com.kh.ssuper.member.model.vo.Member;
+
+public class MemberServiceImpl implements MemberService {
+
+	private MemberDao memberDao = new MemberDao();
+	
+	
+	@Override
+	public int insertMember(Member member) {
+		
+		/* 원래 진행하던 방식
+		 * Connection conn = JDBCTemplate.getConnection();
+		 * int result = new MemberDao().insertMember(conn, member);
+		 * if(result > 0) {
+		 *   JDBCTemplate.commit(conn);
+		 * }
+		 * JDBCTemplate.close(conn);
+		 * return result;
+		 */
+		
+		
+		return 0;
+	}
+
+	@Override
+	public Member login(Member member) {
+		
+		return null;
+	}
+
+}

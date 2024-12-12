@@ -1,0 +1,5 @@
+package com.kh.ssuper.board.model.vo;
+
+public class Reply {
+
+}

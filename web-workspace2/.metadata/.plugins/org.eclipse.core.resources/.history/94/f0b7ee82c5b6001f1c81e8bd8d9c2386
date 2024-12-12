@@ -1,0 +1,47 @@
+package com.kh.ssuper.member.model.dao;
+
+import java.sql.PreparedStatement;
+
+import org.apache.ibatis.session.SqlSession;
+
+import com.kh.ssuper.member.model.vo.Member;
+
+public class MemberDao {
+
+	public int insertMember(SqlSession sqlSession, Member member) {
+		/* 원래 방식
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertMember");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, member.getUserId());
+			pstmt.setString(2, member.getUserPwd());
+			....
+		} catch (~~) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result
+		*/
+		/*
+		 *	sqlSession.insert("SQL문", "SQL문을 실행할 때 필요한 데이터")
+		 *	
+		 * sqlSession.sql문종류에 맞는 메소드("매퍼파일의namespace속성값") 
+		 */
+		// 위치홀더에 값 담는걸 해야함, 이제 DAO에서 진행하지않고 mapper에서 진행한다.
+		
+		//int result = sqlSession.insert("memberMapper.insertMember", member);
+		//return result;
+		
+		return sqlSession.insert("memberMapper.insertMember", member);
+	}
+
+	public void login(SqlSession sqlSession, Member member) {
+
+		sqlSession
+		
+	}
+
+}

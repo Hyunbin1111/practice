@@ -1,0 +1,9 @@
+package com.kh.ssuper.common;
+
+public class Pagination {
+	
+	public static PageInfo getPageInfo() {
+		
+	}
+
+}

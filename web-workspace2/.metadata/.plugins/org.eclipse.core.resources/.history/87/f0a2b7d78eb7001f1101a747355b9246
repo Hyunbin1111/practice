@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="boardMapper">
+
+	<sql id="selectColumn">
+	<!-- sql태그와 include태그를 이용해 반복되는부분을 줄일수있다.  -->
+			SELECT
+				BOARD_NO as boardNo,
+				BOARD_TITLE as boardTitle,
+				USER_ID as boardWriter,
+				COUNT,
+				CREATE_DATE AS createDate
+	</sql>
+
+	<select id="selectListCount" resultType="_int">
+		SELECT
+				COUNT(*)
+		  FROM
+		  		BOARD
+		 WHERE
+		 		STATUS = 'Y'
+		   AND
+		   		BOARD_TYPE = 1
+	</select>
+
+	<select id="selectList" resultType="board">
+		<include refid="selectColumn">
+		</include>
+		  FROM
+		  		BOARD
+		  JOIN
+		  		MEMBER ON (BOARD_WRITER = USER_NO)
+		 WHERE
+		 		BOARD.STATUS = 'Y'
+		 ORDER
+		 	BY
+		 		CREATE_DATE DESC
+	</select>
+
+	<update id="increaseCount" parameterType="_int">
+		UPDATE
+				BOARD
+		   SET
+		   		COUNT = COUNT + 1
+		 WHERE
+		 		BOARD_NO = #{boardNo}
+		   AND
+		   		STATUS = 'Y'
+	</update>
+
+	<select id="selectBoard" parameterType="_int" 
+			resultType="board">
+		<include refid="selectColumn">
+		</include>
+				,
+				BOARD_CONTENT boardContent
+		  FROM
+		  		BOARD
+		  JOIN
+		  		MEMBER ON (USER_NO = BOARD_WRITER)
+		 WHERE
+		 		MEMBER.STATUS = 'Y'
+		   AND
+		   		BOARD_NO = #{boardNo}
+	</select>
+
+	<select id="selectReplyList" parameterType="_int"
+			resultType="com.kh.ssuper.board.model.vo.Reply">
+		SELECT
+				REPLY_NO replyNo,
+				REPLY_CONTENT replyContent,
+				CREATE_DATE createDate,
+				USER_ID replyWriter
+		  FROM
+		  		REPLY
+		  JOIN
+		  		MEMBER ON (USER_NO = REPLY_WRITER)
+		 WHERE
+				REF_BNO = #{boardNo}
+		 ORDER
+		 	BY
+		 		REPLY_NO DESC
+	</select>
+	
+	<resultMap type="board" id="boardResultSet">
+		<id column="boardNo" property="boardNo"/>
+		<result column="boardTitle" property="boardTitle"/>
+		<result column="boardContent" property="boardContent"/>
+		<result column="boardWriter" property="boardWriter"/>
+		<result column="createDate" property="createDate"/>
+		<result column="count" property="count"/>
+		
+		<collection property="replyList" 
+					ofType="com.kh.ssuper.board.model.vo.Reply">
+			<id column="replyNo" property="replyNo"/>
+			<result column="replyWriter" property="replyWriter"/>
+			<result column="replyContent" property="replyContent"/>
+			<result column="replyDate" property="createDate"/>
+		</collection>
+	</resultMap>
+	
+	<select id="selectBoardAndReply" parameterType="_int"
+			resultMap="boardResultSet">
+       	SELECT
+	            BOARD_NO as boardNo,
+	            BOARD_TITLE as boardTitle,
+	            M1.USER_ID as boardWriter,
+	            COUNT,
+	            BOARD.CREATE_DATE AS createDate,
+	            BOARD_CONTENT AS boardContent,
+	            REPLY_NO replyNo,
+	            M2.USER_ID replyWriter,
+	            REPLY_CONTENT replyContent,
+	            REPLY.CREATE_DATE replyDate
+		  FROM
+		  		BOARD
+		  LEFT
+		  JOIN
+		  		MEMBER M1 ON (BOARD_WRITER = M1.USER_NO)
+          LEFT
+          JOIN
+                REPLY ON (BOARD_NO = REF_BNO)
+          LEFT
+          JOIN
+                MEMBER M2 ON (REPLY_WRITER = M2.USER_NO)
+		 WHERE
+		 		BOARD.STATUS = 'Y'
+           AND
+                BOARD_NO = #{boardNo}
+         ORDER
+            BY
+                REPLY.CREATE_DATE DESC
+	</select>
+
+	<select id="searchedCount" parameterType="hashmap"
+			resultType="_int">
+		SELECT COUNT(*) 
+		  FROM BOARD 
+		  JOIN MEMBER ON(BOARD_WRITER = USER_NO)
+		 WHERE BOARD.STATUS = 'Y'
+		 <if test="condition == 'content'">
+		 	and board_content like 
+		 </if>
+		 <if test="condition == 'writer'">
+		 	AND USER_ID LIKE 
+		 </if>
+		 <if test="condition == 'title'">
+		 	AND BOARD_TITLE 
+		 </if>
+		 '%' || #{keyword} || '%'
+	</select>
+
+</mapper>
+  

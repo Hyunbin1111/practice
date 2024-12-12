@@ -1,0 +1,53 @@
+package com.kh.ssuper.board.model.service;
+
+import static com.kh.ssuper.common.Template.getSqlSession;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import com.kh.ssuper.board.model.dao.BoardDao;
+import com.kh.ssuper.board.model.vo.Board;
+import com.kh.ssuper.board.model.vo.Reply;
+import com.kh.ssuper.common.PageInfo;;
+
+public class BoardServiceImpl implements BoardService {
+
+	private BoardDao boardDao = new BoardDao();
+	
+	@Override
+	public int selectListCount() {
+		SqlSession sqlSession = getSqlSession();
+		
+		int count = boardDao.selectListCount(sqlSession);
+		
+		sqlSession.close();
+		
+		return count;
+	}
+
+	@Override
+	public List<Board> selectList(PageInfo pi) {
+
+		return null;
+	}
+
+	@Override
+	public int increaseCount(int boardNo) {
+
+		return 0;
+	}
+
+	@Override
+	public Board selectBoard() {
+
+		return null;
+	}
+
+	@Override
+	public List<Reply> selectReplyList(int boardNo) {
+
+		return null;
+	}
+
+}
